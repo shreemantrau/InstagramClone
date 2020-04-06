@@ -10,52 +10,81 @@
         android:id="@+id/punchPower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="124dp"
         android:ems="10"
         android:hint="Punch Power"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="73dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/punchSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="124dp"
         android:ems="10"
         android:hint="Punch Speed"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/punchPower"
-        tools:layout_editor_absoluteX="73dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/punchPower" />
 
     <EditText
         android:id="@+id/kickPower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="124dp"
         android:ems="10"
         android:hint="Kick Power"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/punchSpeed"
-        tools:layout_editor_absoluteX="73dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/punchSpeed" />
 
     <EditText
         android:id="@+id/kickSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="124dp"
         android:ems="10"
         android:hint="Kick Speed"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/kickPower"
-        tools:layout_editor_absoluteX="73dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kickPower" />
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="188dp"
         android:text="Save"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="477dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kickSpeed" />
+
+    <TextView
+        android:id="@+id/getData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:text="Get Data from Server"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSave"
+        app:layout_constraintVertical_bias="0.256" />
+
+    <Button
+        android:id="@+id/btnGetAllKB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="All kickboxer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getData"
+        tools:layout_editor_absoluteX="186dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
