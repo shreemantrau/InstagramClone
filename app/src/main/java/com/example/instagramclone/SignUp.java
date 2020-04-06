@@ -71,7 +71,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                             if(e == null){
                                 if(objects.size() > 0){
                                     for(ParseObject object:objects){
-                                        allKickBoxers+=object.get("punchPower") + "\n";
+                                        allKickBoxers+=object.get("punchPower") + " \n";
                                     }
                                     FancyToast.makeText(SignUp.this, allKickBoxers, FancyToast.LENGTH_LONG, FancyToast.SUCCESS, true).show();
                                 }
