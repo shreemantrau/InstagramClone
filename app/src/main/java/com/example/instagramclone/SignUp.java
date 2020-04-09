@@ -2,6 +2,7 @@ package com.example.instagramclone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.pm.SigningInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private EditText punchPower, punchSpeed,kickPower,kickSpeed;
     private TextView getData;
     private Button btnAllKickBoxers;
+    private Button btnNextActivity;
     private String allKickBoxers;
 
     @Override
@@ -37,7 +39,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         btnAllKickBoxers=findViewById(R.id.btnGetAllKB);
         btnSave = findViewById(R.id.btnSave);
         btnSave.setOnClickListener(SignUp.this);
-
+        btnNextActivity=findViewById(R.id.btnNextActivity);
         kickPower=findViewById(R.id.kickPower);
         kickSpeed=findViewById(R.id.kickSpeed);
         punchPower=findViewById(R.id.punchPower);
@@ -54,17 +56,31 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                     public void done(ParseObject object, ParseException e) {
                         if(object!=null &&  e==null){
                            getData.setText(object.get("kickSpeed")+"");
+
                         }
                     }
                 });
             }
         });
 
+        btnNextActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(SignUp.this, SignUpLoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         btnAllKickBoxers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 allKickBoxers="";
                 ParseQuery<ParseObject> queryAll= ParseQuery.getQuery("KickBoxer");
+//               queryAll.whereGreaterThanOrEqualTo("kickSpeed",1);
+               queryAll.whereGreaterThan("punchPower",2);
+//               queryAll.setLimit(1);
+
                 queryAll.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
