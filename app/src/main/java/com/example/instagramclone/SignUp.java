@@ -2,6 +2,7 @@ package com.example.instagramclone;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Constraints;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.content.pm.SigningInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -33,7 +35,6 @@ import java.util.List;
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
    private Button btnSignUp;
    private Button btnLogin;
-
    private EditText txtUsername,txtPassword,txtPassword2;
 
     @Override
@@ -50,6 +51,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         btnSignUp.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
+        //we wont be needing this as the transition to next activity happens right away. This was required when we were testing the login feature
 
         if(ParseUser.getCurrentUser()!=null){
             Log.i("**********","!!!!!!!!!!!!!1");
@@ -68,6 +70,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
                         if(user != null && e == null){
                             FancyToast.makeText(SignUp.this,ParseUser.getCurrentUser().getUsername()+" logged in.",FancyToast.SUCCESS,FancyToast.LENGTH_SHORT,true).show();
+                            transitionToSocialMediaActivity();
+                        }else{
+                            FancyToast.makeText(SignUp.this,"Invalid Credentials", FancyToast.ERROR,FancyToast.LENGTH_SHORT,true).show();
                         }
                     }
                 });
@@ -87,19 +92,21 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
 
                 if(txtPassword2.getText().toString().equals(txtPassword.getText().toString()) &&
-                        txtPassword2.getText().toString() != "" && txtPassword.getText().toString()!=null) {
+                        txtPassword2.getText().toString() != "" && txtPassword.getText().toString()!=null && txtUsername.getText().toString().equals("")
+                        && txtUsername.getText().toString() != null ) {
                     appUser.signUpInBackground(new SignUpCallback() {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
                                 FancyToast.makeText(SignUp.this, appUser.getUsername() + " has signed in", FancyToast.SUCCESS, FancyToast.LENGTH_SHORT, true).show();
+
                             } else {
                                 FancyToast.makeText(SignUp.this, e.getMessage() + "", FancyToast.ERROR, FancyToast.LENGTH_SHORT, true).show();
                             }
                         }
                     });
                 }else{
-                    FancyToast.makeText(SignUp.this,"Passwords do not match",FancyToast.ERROR,FancyToast.LENGTH_SHORT,true).show();
+                    FancyToast.makeText(SignUp.this,"Passwords do not match and/or Username is empty",FancyToast.ERROR,FancyToast.LENGTH_SHORT,true).show();
                 }
 
                 progressDialog.dismiss();
@@ -107,6 +114,19 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
     }
+
+    private void transitionToSocialMediaActivity(){
+        Intent intent=new Intent(SignUp.this,SocialMediaActivity.class);
+        startActivity(intent);
+    }
+
+    //this method helps to get to rd of method when click on the screen
+    public void onClickConstraint(View view){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+    }
+
+
 }
 
 
