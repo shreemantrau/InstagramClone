@@ -53,10 +53,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         btnLogin.setOnClickListener(this);
         //we wont be needing this as the transition to next activity happens right away. This was required when we were testing the login feature
 
-        if(ParseUser.getCurrentUser()!=null){
-            Log.i("**********","!!!!!!!!!!!!!1");
-            ParseUser.getCurrentUser().logOut();
-        }
+//        if(ParseUser.getCurrentUser()!=null){
+//            Log.i("**********","!!!!!!!!!!!!!1");
+//            ParseUser.getCurrentUser().logOut();
+//        }
 
     }
 
@@ -92,7 +92,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
 
                 if(txtPassword2.getText().toString().equals(txtPassword.getText().toString()) &&
-                        txtPassword2.getText().toString() != "" && txtPassword.getText().toString()!=null && txtUsername.getText().toString().equals("")
+                        txtPassword2.getText().toString() != "" && txtPassword.getText().toString()!=null
                         && txtUsername.getText().toString() != null ) {
                     appUser.signUpInBackground(new SignUpCallback() {
                         @Override

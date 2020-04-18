@@ -1,12 +1,18 @@
 package com.example.instagramclone;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.fragment.app.Fragment;
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 
 /**
@@ -45,7 +51,8 @@ public class ProfileTab extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    private EditText edtProfileName,edtBio,edtProfession,edtHobbies,edtSport;
+    private Button btnUpdateProfile;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +66,69 @@ public class ProfileTab extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_tab2, container, false);
+        View view= inflater.inflate(R.layout.fragment_profile_tab, container, false);
+        edtBio=view.findViewById(R.id.edtBio);
+        edtHobbies=view.findViewById(R.id.edtHobbies);
+        edtProfession=view.findViewById(R.id.edtProfession);
+        edtProfileName=view.findViewById(R.id.edtProfileName);
+        edtSport=view.findViewById(R.id.edtSport);
+        btnUpdateProfile=view.findViewById(R.id.btnUpdateProfile);
+
+        final ParseUser parseUser=ParseUser.getCurrentUser();
+        //getting the profile information and updating it
+
+        if(parseUser.get("profileName")== null) {
+            edtProfileName.setText("");
+        }else{
+            edtProfileName.setText(parseUser.get("profileName").toString());
+        }
+
+        if(parseUser.get("profileSport")==null){
+            edtSport.setText("");
+        } else{
+            edtSport.setText(parseUser.get("profileSport").toString());
+        }
+
+        if(parseUser.get("profileProfession")== null) {
+            edtProfession.setText("");
+        }else{
+            edtProfession.setText(parseUser.get("profileProfession").toString());
+        }
+
+        if(parseUser.get("profileHobbies")==null){
+            edtHobbies.setText("");
+        } else{
+            edtHobbies.setText(parseUser.get("profileHobbies").toString());
+        }
+
+        if(parseUser.get("profileBio") == null){
+            edtBio.setText("");
+        }else{
+            edtBio.setText(parseUser.get("profileBio").toString());
+        }
+
+        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parseUser.put("profileName",edtProfileName.getText().toString());
+                parseUser.put("profileBio",edtBio.getText().toString());
+                parseUser.put("profileProfession",edtProfession.getText().toString());
+                parseUser.put("profileHobbies",edtHobbies.getText().toString());
+                parseUser.put("profileSport",edtSport.getText().toString());
+
+                parseUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e == null){
+                            FancyToast.makeText(getContext(),"Information has been updated",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show();
+                        } else{
+                            FancyToast.makeText(getContext(),"Error! "+e,FancyToast.LENGTH_SHORT,FancyToast.ERROR,true).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        return view;
     }
 }
