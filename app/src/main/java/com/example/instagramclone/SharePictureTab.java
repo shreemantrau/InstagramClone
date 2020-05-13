@@ -68,7 +68,7 @@ public class SharePictureTab extends Fragment implements View.OnClickListener {
         switch (v.getId()){
 
             case R.id.btnShareImage:
-                if(receivedImageBitmap!=null){
+                if(receivedImageBitmap==null){
                     if(edtDescription.getText().toString().equals("")){
                         FancyToast.makeText(getContext(),"Error", Toast.LENGTH_SHORT,FancyToast.ERROR,true);
                     }
